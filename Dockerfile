@@ -45,6 +45,7 @@ RUN echo 'export PULSE_SERVER="tcp:localhost:64713"' >> /usr/local/bin/skype-pul
 RUN echo 'PULSE_LATENCY_MSEC=60 skype' >> /usr/local/bin/skype-pulseaudio
 RUN chmod 755 /usr/local/bin/skype-pulseaudio
 
+RUN echo "America/Chicago" > /etc/timezone
 
 # Expose the SSH port
 EXPOSE 22
