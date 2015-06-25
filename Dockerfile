@@ -46,6 +46,7 @@ RUN echo 'PULSE_LATENCY_MSEC=60 skype' >> /usr/local/bin/skype-pulseaudio
 RUN chmod 755 /usr/local/bin/skype-pulseaudio
 
 RUN echo "America/Chicago" > /etc/timezone
+RUN dpkg-reconfigure -f noninteractive tzdata
 
 # Expose the SSH port
 EXPOSE 22
