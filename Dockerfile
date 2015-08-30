@@ -1,26 +1,30 @@
 FROM debian:stable
-MAINTAINER Tom Parys "tom.parys+copyright@gmail.com"
 
 # Tell debconf to run in non-interactive mode
 ENV DEBIAN_FRONTEND noninteractive
+
+# Set default locale for the environment
+ENV LC_ALL C.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US.UTF-8
 
 # Setup multiarch because Skype is 32bit only
 RUN dpkg --add-architecture i386
 
 # Make sure the repository information is up to date
 RUN apt-get update
-
+RUN apt-get upgrade -y -qq
 
 # Install PulseAudio for i386 (64bit version does not work with Skype)
 RUN apt-get install -y libpulse0:i386 pulseaudio:i386
 
 # We need ssh to access the docker container, wget to download skype
-RUN apt-get install -y openssh-server wget 
+RUN apt-get install -y openssh-server wget
 
 # Install Skype
 RUN wget http://download.skype.com/linux/skype-debian_4.3.0.37-1_i386.deb -O /usr/src/skype.deb
 RUN dpkg -i /usr/src/skype.deb || true
-RUN apt-get install -fy						# Automatically detect and install dependencies
+RUN apt-get install -fy # Automatically detect and install dependencies
 
 
 # Create user "docker" and set the password to "docker"
